@@ -1,5 +1,6 @@
-# Importación de FastAPI
+# Importación de FastAPI y CORS
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 # Importación del router de estudiantes
 # students.py contiene todas las rutas relacionadas con estudiantes
@@ -21,6 +22,15 @@ Base.metadata.create_all(bind=engine)
 
 # Instancia principal de FastAPI
 app = FastAPI()
+
+# Middleware CORS para permitir solicitudes del frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Registro de middlewares
 # El orden de add_middleware determina el orden de ejecución:
