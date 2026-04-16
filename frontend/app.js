@@ -1,13 +1,37 @@
-const API_URL = 'http://localhost:8000/students';
+const API_URL = 'http://localhost:8000';
 
 document.addEventListener('DOMContentLoaded', () => {
+    checkAuth();
     loadStudents();
     setupForm();
 });
 
+function checkAuth() {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        window.location.href = 'login.html';
+        return false;
+    }
+    return true;
+}
+
+function getHeaders() {
+    const token = localStorage.getItem('authToken');
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': token
+    };
+}
+
 function loadStudents() {
-    fetch(API_URL)
+    if (!checkAuth()) return;
+
+    fetch(API_URL + '/students', { headers: getHeaders() })
         .then(response => {
+            if (response.status === 401) {
+                logout();
+                return [];
+            }
             if (!response.ok) {
                 throw new Error('Error al cargar estudiantes');
             }
@@ -47,6 +71,8 @@ function renderStudents(students) {
 }
 
 function setupForm() {
+    if (!checkAuth()) return;
+
     const form = document.getElementById('student-form');
     const cancelBtn = document.getElementById('cancel-btn');
 
@@ -59,6 +85,8 @@ function setupForm() {
 }
 
 function saveStudent() {
+    if (!checkAuth()) return;
+
     const id = document.getElementById('student-id').value;
     const name = document.getElementById('name').value;
     const age = parseInt(document.getElementById('age').value);
@@ -67,16 +95,18 @@ function saveStudent() {
     const studentData = { name, age, grade };
 
     const method = id ? 'PUT' : 'POST';
-    const url = id ? `${API_URL}/${id}` : API_URL;
+    const url = id ? `${API_URL}/students/${id}` : API_URL + '/students';
 
     fetch(url, {
         method: method,
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: getHeaders(),
         body: JSON.stringify(studentData)
     })
     .then(response => {
+        if (response.status === 401) {
+            logout();
+            throw new Error('Sesión expirada');
+        }
         if (!response.ok) {
             return response.json().then(err => { throw new Error(err.detail || 'Error en la operación'); });
         }
@@ -107,10 +137,15 @@ function deleteStudent(id) {
         return;
     }
 
-    fetch(`${API_URL}/${id}`, {
-        method: 'DELETE'
+    fetch(`${API_URL}/students/${id}`, {
+        method: 'DELETE',
+        headers: getHeaders()
     })
     .then(response => {
+        if (response.status === 401) {
+            logout();
+            throw new Error('Sesión expirada');
+        }
         if (!response.ok) {
             return response.json().then(err => { throw new Error(err.detail || 'Error al eliminar'); });
         }
@@ -133,7 +168,16 @@ function resetForm() {
     document.getElementById('cancel-btn').style.display = 'none';
 }
 
+function logout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userEmail');
+    window.location.href = 'login.html';
+}
+
 function showMessage(text, type) {
+    const existing = document.querySelector('.message');
+    if (existing) existing.remove();
+
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${type}`;
     messageDiv.textContent = text;

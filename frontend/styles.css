@@ -145,3 +145,13 @@ tbody tr:hover {
     color: #721c24;
     display: block;
 }
+
+.btn-logout {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 15px;
+}
+
+.btn-logout:hover {
+    background-color: #5a6268;
+}
