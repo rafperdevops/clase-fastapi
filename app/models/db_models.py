@@ -5,7 +5,7 @@ from sqlalchemy import Column, Integer, String, Float
 
 # Base: clase declarativa para definir el modelo
 # Importada desde database.py donde se definió
-from database import Base
+from app.database import Base
 
 
 # Student: modelo ORM que mapea a la tabla 'students' en la base de datos

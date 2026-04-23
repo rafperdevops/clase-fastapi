@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from database import get_db
-from controllers.auth_controller import AuthController
+from app.database import get_db
+from app.controllers.auth_controller import AuthController
 
 
 class RequestOtpSchema(BaseModel):

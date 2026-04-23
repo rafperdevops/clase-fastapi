@@ -3,8 +3,8 @@ import base64
 import random
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from models.user_model import User
-from services.email_service import send_otp_email
+from app.models.user_model import User
+from app.services.email_service import send_otp_email
 
 
 def create_token(email: str) -> str:

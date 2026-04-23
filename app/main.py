@@ -4,19 +4,19 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # Importación del router de estudiantes
 # students.py contiene todas las rutas relacionadas con estudiantes
-from routes import students
-from routes import auth
+from app.routes import students
+from app.routes import auth
 
 # Importación de engine y Base para crear las tablas
 # engine: conexión a la base de datos SQLite
 # Base: clase base para los modelos ORM
-from database import engine, Base
+from app.database import engine, Base
 
 # Importación de los middlewares
-from middleware.logging_middleware import LoggingMiddleware
-from middleware.rate_limit_middleware import RateLimitMiddleware
-from middleware.audit_middleware import AuditMiddleware
-from middleware.auth_middleware import AuthenticationMiddleware
+from app.middleware.logging_middleware import LoggingMiddleware
+from app.middleware.rate_limit_middleware import RateLimitMiddleware
+from app.middleware.audit_middleware import AuditMiddleware
+from app.middleware.auth_middleware import AuthenticationMiddleware
 
 # create_all(): crea todas las tablas definidas en los modelos
 # Se ejecuta al iniciar la app y crea el archivo 'students.db' si no existe

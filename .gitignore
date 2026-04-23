@@ -14,3 +14,32 @@ ENV/
 .idea/
 .vscode/
 *.log
+app/__pycache__/
+
+# Additional Python compilation and cache files
+*.pyc
+*.pyo
+*.pyd
+# Python bytecode with implementation and version (e.g., database.cpython-313.pyc)
+*.cpython-*.pyc
+*.cpython-*.pyo
+*.cpython-*.pyd
+*.pypy-*.pyc
+*.pypy-*.pyo
+*.pypy-*.pyd
+*.jython-*.pyc
+*.jython-*.pyo
+*.jython-*.pyd
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+.cache/
+*.swp
+*.swo
+*~
+.python-version
+*.egg-info/
+dist/
+build/
