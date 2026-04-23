@@ -5,14 +5,14 @@ from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
 
 # Student: modelo Pydantic para validación de datos de entrada
-from models.student_model import Student
+from app.models.student_model import Student
 
 # StudentDB: modelo ORM de SQLAlchemy (tabla en la DB)
 # Se renombra para distinguir del modelo Pydantic
-from models.db_models import Student as StudentDB
+from app.models.db_models import Student as StudentDB
 
 # get_db: función para obtener la sesión de base de datos
-from database import get_db
+from app.database import get_db
 
 
 # StudentController: clase que contiene la lógica de negocio

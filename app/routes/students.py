@@ -6,13 +6,13 @@ from sqlalchemy.orm import Session
 
 # Student: modelo Pydantic para datos de entrada (sin ID)
 # StudentResponse: modelo Pydantic para respuesta (con ID)
-from models.student_model import Student, StudentResponse
+from app.models.student_model import Student, StudentResponse
 
 # StudentController: lógica de negocio para estudiantes
-from controllers.student_controller import StudentController
+from app.controllers.student_controller import StudentController
 
 # get_db: función para obtener la sesión de base de datos
-from database import get_db
+from app.database import get_db
 
 # router: objeto que define las rutas de estudiantes
 # prefix="/students": todas las rutas empezar por /students
